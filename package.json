@@ -1,0 +1,47 @@
+{
+  "name": "capstone-15-04",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/TranQuocNhut/capstone-15-04#readme",
+  "bugs": {
+    "url": "https://github.com/TranQuocNhut/capstone-15-04/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TranQuocNhut/capstone-15-04.git"
+  },
+  "license": "ISC",
+  "author": "Tran Quoc Nhut",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon",
+    "build": "rimraf ./dist && tsc && tsc-alias",
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.5.0",
+    "jiti": "^2.6.1",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.3",
+    "rimraf": "^6.1.3",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.2"
+  }
+}
