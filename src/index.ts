@@ -22,7 +22,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
 // Redirect root to api docs
 app.get('/', (req: Request, res: Response) => {
-  res.redirect('/api-docs')
+  res.redirect('/api-docs/')
 })
 
 const PORT = process.env.PORT || 3000
