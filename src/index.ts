@@ -24,9 +24,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 // Get all users
 app.get('/', async (req: Request, res: Response) => {
   try {
-    const userCount = await prisma.user.count()
-
-    res.json(userCount === 0 ? 'No users have been added yet.' : 'Some users have been added to the database.')
+    const users = await prisma.user.findMany()
+    res.json(users)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Internal server error' })
