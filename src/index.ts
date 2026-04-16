@@ -21,15 +21,9 @@ app.use('/save', saveRoutes)
 app.use('/users', userRoutes)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
-// Get all users
-app.get('/', async (req: Request, res: Response) => {
-  try {
-    const users = await prisma.user.findMany()
-    res.json(users)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Internal server error' })
-  }
+// Redirect root to api docs
+app.get('/', (req: Request, res: Response) => {
+  res.redirect('/api-docs')
 })
 
 const PORT = process.env.PORT || 3000
