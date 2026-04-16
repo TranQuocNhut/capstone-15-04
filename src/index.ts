@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import express, { Request, Response } from 'express'
-import prisma from './configs/prisma.config.js'
 import authRoutes from './routes/auth.route.js'
 import imageRoutes from './routes/image.route.js'
 import commentRoutes from './routes/comment.route.js'
