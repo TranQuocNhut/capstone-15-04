@@ -6,6 +6,11 @@
       "use": "@vercel/node"
     }
   ],
+  "functions": {
+    "src/index.ts": {
+      "includeFiles": "src/**/*.{ts,js}"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
