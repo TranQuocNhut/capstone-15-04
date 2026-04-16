@@ -21,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        env:
+          DATABASE_URL: 'postgresql://dummy:dummy@localhost:5432/dummy'
 
       - name: Run ESLint
         run: npm run lint # Sử dụng script đã có trong package.json
