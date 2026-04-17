@@ -10,12 +10,12 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Development server'
-      },
-      {
         url: 'https://capstone-15-04-production.up.railway.app',
         description: 'Production Railway server'
+      },
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server'
       }
     ],
     components: {
