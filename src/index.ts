@@ -32,8 +32,10 @@ app.get('/', async (req: Request, res: Response) => {
   }
 })
 
-const PORT = process.env.PORT || 3000
+// Sửa PORT để lấy từ môi trường của Railway
+const PORT = Number(process.env.PORT) || 3000
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+// Lắng nghe trên 0.0.0.0 thay vì localhost
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${PORT}`)
 })
