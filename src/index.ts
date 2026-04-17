@@ -19,7 +19,7 @@ app.use('/images', imageRoutes)
 app.use('/comments', commentRoutes)
 app.use('/save', saveRoutes)
 app.use('/users', userRoutes)
-// Chuyển hướng tức thì từ trang chủ sang Swagger
+// Chuyển hướng server-side từ trang chủ sang Swagger
 app.get('/', (req: Request, res: Response) => {
   res.redirect('/api-docs')
 })
@@ -29,64 +29,62 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(specs, {
     customCss: `
+      /* Ép nền tối toàn trang ngay lập tức */
+      body, .swagger-ui { 
+        background-color: #1b1b1b !important; 
+        margin: 0;
+      }
       #loading-overlay {
         position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
+        top: 0; left: 0; width: 100vw; height: 100vh;
         background: #1b1b1b;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        z-index: 99999;
-        transition: opacity 0.5s ease;
+        z-index: 999999;
+        transition: opacity 0.4s ease;
       }
       .progress-container {
-        width: 320px; height: 16px;
-        background: #222;
+        width: 280px; height: 10px;
+        background: #333;
         border-radius: 20px;
         overflow: hidden;
-        border: 2px solid #333;
-        padding: 2px;
       }
       .progress-bar {
         width: 0%; height: 100%;
         background: linear-gradient(90deg, #4ade80, #22c55e);
-        border-radius: 20px;
-        box-shadow: 0 0 20px #4ade8055;
         transition: width 0.1s linear;
       }
       .loading-text {
         color: #4ade80;
-        margin-top: 20px;
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 3px;
-        text-transform: uppercase;
+        margin-top: 15px;
+        font-family: sans-serif;
+        font-size: 13px;
+        letter-spacing: 2px;
       }
-      .swagger-ui { opacity: 0; transition: opacity 0.5s ease; } /* Ẩn mờ swagger */
+      .swagger-ui { opacity: 0; }
     `,
     customJs: `
       (function() {
         const overlay = document.createElement('div');
         overlay.id = 'loading-overlay';
-        overlay.innerHTML = '<div class="progress-container"><div class="progress-bar" id="pb"></div></div><div class="loading-text">Loading Capstone API...</div>';
-        document.body.appendChild(overlay);
+        overlay.innerHTML = '<div class="progress-container"><div class="progress-bar" id="pb"></div></div><div class="loading-text">LOADING...</div>';
+        document.body.insertBefore(overlay, document.body.firstChild);
 
-        let width = 0;
+        let w = 0;
         const pb = document.getElementById('pb');
-        const interval = setInterval(() => {
-          if (width >= 100) {
-            clearInterval(interval);
+        const itv = setInterval(() => {
+          w += Math.random() * 10;
+          if (w >= 100) {
+            w = 100;
+            clearInterval(itv);
             setTimeout(() => {
               overlay.style.opacity = '0';
               const sw = document.querySelector('.swagger-ui');
-              if(sw) sw.style.opacity = '1';
-              setTimeout(() => overlay.remove(), 500);
-            }, 300);
-          } else {
-            width += Math.random() * 8;
-            if (width > 100) width = 100;
-            pb.style.width = width + '%';
+              if (sw) sw.style.opacity = '1';
+              setTimeout(() => overlay.remove(), 400);
+            }, 200);
           }
-        }, 60);
+          pb.style.width = w + '%';
+        }, 50);
       })();
     `
   })
