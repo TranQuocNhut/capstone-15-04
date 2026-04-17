@@ -12,6 +12,7 @@ import { specs } from './configs/swagger.config.js'
 const app = express()
 
 app.use(express.json())
+app.use(express.static('public'))
 
 app.use('/auth', authRoutes)
 app.use('/images', imageRoutes)
