@@ -14,8 +14,8 @@ const options: swaggerJsdoc.Options = {
         description: 'Development server'
       },
       {
-        url: 'https://capstone-15-04.vercel.app',
-        description: 'Production Vercel server'
+        url: 'https://capstone-15-04-production.up.railway.app',
+        description: 'Production Railway server'
       }
     ],
     components: {
@@ -28,7 +28,6 @@ const options: swaggerJsdoc.Options = {
       }
     }
   },
-
   apis: ['./src/routes/*.ts', './src/controllers/*.ts', './dist/routes/*.js', './dist/controllers/*.js']
 }
 
