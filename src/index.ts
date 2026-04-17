@@ -29,63 +29,84 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(specs, {
     customCss: `
-      /* Ép nền tối toàn trang ngay lập tức */
-      body, .swagger-ui { 
+      /* 1. Nền tối toàn trang */
+      body { 
         background-color: #1b1b1b !important; 
-        margin: 0;
+        margin: 0; 
+        overflow: hidden; 
       }
-      #loading-overlay {
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        background: #1b1b1b;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        z-index: 999999;
-        transition: opacity 0.4s ease;
-      }
-      .progress-container {
-        width: 280px; height: 10px;
-        background: #333;
-        border-radius: 20px;
-        overflow: hidden;
-      }
-      .progress-bar {
-        width: 0%; height: 100%;
-        background: linear-gradient(90deg, #4ade80, #22c55e);
-        transition: width 0.1s linear;
-      }
-      .loading-text {
-        color: #4ade80;
-        margin-top: 15px;
-        font-family: sans-serif;
-        font-size: 13px;
-        letter-spacing: 2px;
-      }
-      .swagger-ui { opacity: 0; }
-    `,
-    customJs: `
-      (function() {
-        const overlay = document.createElement('div');
-        overlay.id = 'loading-overlay';
-        overlay.innerHTML = '<div class="progress-container"><div class="progress-bar" id="pb"></div></div><div class="loading-text">LOADING...</div>';
-        document.body.insertBefore(overlay, document.body.firstChild);
 
-        let w = 0;
-        const pb = document.getElementById('pb');
-        const itv = setInterval(() => {
-          w += Math.random() * 10;
-          if (w >= 100) {
-            w = 100;
-            clearInterval(itv);
-            setTimeout(() => {
-              overlay.style.opacity = '0';
-              const sw = document.querySelector('.swagger-ui');
-              if (sw) sw.style.opacity = '1';
-              setTimeout(() => overlay.remove(), 400);
-            }, 200);
-          }
-          pb.style.width = w + '%';
-        }, 50);
-      })();
+      /* 2. Lớp phủ che toàn màn hình */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: #1b1b1b;
+        z-index: 999998;
+        animation: fadeOut 0.5s forwards 3s;
+      }
+
+      /* 3. Thanh Loading Container */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 250px; height: 6px;
+        background: #333;
+        border-radius: 10px;
+        z-index: 999999;
+        animation: fadeOut 0.5s forwards 3s;
+      }
+
+      /* 4. Dải màu xanh chạy (Progress Bar) */
+      html::before {
+        content: "";
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0; height: 6px;
+        background: linear-gradient(90deg, #4ade80, #22c55e);
+        box-shadow: 0 0 15px #4ade80;
+        border-radius: 10px;
+        z-index: 1000000;
+        animation: load 2.5s ease-in-out forwards, fadeOut 0.5s forwards 3s;
+      }
+
+      /* 5. Chữ Loading */
+      html::after {
+        content: "LOADING CAPSTONE API...";
+        position: fixed;
+        top: 55%; left: 50%;
+        transform: translate(-50%, -50%);
+        color: #4ade80;
+        font-family: sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        z-index: 1000000;
+        animation: fadeOut 0.5s forwards 3s;
+      }
+
+      /* Hoạt ảnh chạy */
+      @keyframes load {
+        0% { width: 0; }
+        100% { width: 250px; }
+      }
+
+      @keyframes fadeOut {
+        0% { opacity: 1; pointer-events: all; }
+        100% { opacity: 0; visibility: hidden; pointer-events: none; }
+      }
+
+      @keyframes fadeIn {
+        to { opacity: 1; }
+      }
+
+      /* Giao diện Swagger mờ dần hiện ra */
+      .swagger-ui { 
+        opacity: 0; 
+        animation: fadeIn 0.8s forwards 3.2s; 
+      }
     `
   })
 )
